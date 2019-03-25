@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>详情页</title>
+</head>
+
+<body>
+    
+
+
+    <script src="./js/libs/axios.js"></script>
+    <script>
+        var url = location.search;
+        console.log(url)
+
+        url = url.slice(5);
+
+        console.log(url)
+
+        axios("/api/getcenter", {
+            params: {
+                _id: url
+            }
+        }).then(function (data) {
+
+            var data = data.data.msg[0];
+            console.log(data);
+            document.body.innerHTML = `
+                <li data-id="${data._id}">
+<div class="left">
+    <p class="userinfo">
+        <img src="${data.userimg}" alt="">
+        <span class="username">${data.username}</span> 
+    </p>
+    <h5>${data.title}</h5>
+    <span class="textsCon">${data.container}</span>
+    <p class="timerNow">距结束<span class="day">${data.timer.day}</span>天<span class="hour">${data.timer.hour}</span>小时<span class="min">${data.timer.min}</span>分</p>
+</div>
+<div class="right">
+    <img src="${data.img}" alt="">
+</div>
+</li>
+
+                `
+        })
+    </script>
+</body>
+
+</html>
